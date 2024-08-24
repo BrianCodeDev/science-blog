@@ -1,30 +1,42 @@
 /*
-Theme Name: Understrap
-Theme URI: https://understrap.com
-Author: Howard Development &amp; Consulting
-Author URI: https://howarddc.com
-GitHub Theme URI: https://github.com/understrap/understrap
-Description: The renowned WordPress starter theme framework that combined Underscores and Bootstrap. Trusted by more than 100,000 developers for building handcrafted, custom WordPress sites.
-Version: 1.2.4
-Requires at least: 5.0
-Tested up to: 6.1
-Requires PHP: 5.2
-License: GNU General Public License v3 or later
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Text Domain: understrap
-Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, custom-background, custom-logo, custom-menu, featured-images, footer-widgets, full-width-template, theme-options, translation-ready, block-styles, wide-blocks, editor-style, threaded-comments, accessibility-ready
+Theme Name: Science Blog
+Author: BrianCodeDev
 
-Understrap WordPress Theme, (C) 2021 Howard Development & Consulting, LLC
-Understrap is distributed under the terms of the GNU GPL.
-
-Resource Licenses:
-Understrap is based on Underscores https://underscores.me/, (C) Automattic, Inc.
-Font Awesome: https://fontawesome.com/v4.7/license/ (Font: SIL OFL 1.1, (S)CSS: MIT)
-Bootstrap: https://getbootstrap.com | https://github.com/twbs/bootstrap/blob/master/LICENSE (MIT)
-WP Bootstrap Navwalker by Edward McIntyre & William Patton: https://github.com/twittem/wp-bootstrap-navwalker (GNU GPLv3)
 */
-
-/*
-Do not modify the parent Understrap theme. Instead, download a copy of the Understrap Child starter theme and do all your development within the child theme.
-Full developer documentation: https://docs.understrap.com
-*/
+.navbar .container-fluid .navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+.d-flex .subscribe-button {
+    padding: 5px 20px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+.d-flex {
+    align-items: center;
+}
+.d-flex input {
+    background-color: rgb(239, 239, 239);
+    border-radius: 100px;
+    color: black;
+    padding-left: 10px;
+    outline: none;
+    height: 30px;
+    width: 400px;
+}
+.center-text {
+    text-align: center;
+    border: 1px solid black;
+    border-left: 0;
+    border-right: 0;
+    padding: 10px;
+    box-shadow: 2px 2px 2px rgb(41, 41, 41);
+}
+.center-text h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}

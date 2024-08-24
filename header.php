@@ -27,12 +27,23 @@ $navbar_type       = get_theme_mod( 'understrap_navbar_type', 'collapse' );
 <div class="site" id="page">
 
 	<!-- ******************* The Navbar Area ******************* -->
-	<header id="wrapper-navbar">
+	<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">New Blog Works</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-		<a class="skip-link <?php echo understrap_get_screen_reader_class( true ); ?>" href="#content">
-			<?php esc_html_e( 'Skip to content', 'understrap' ); ?>
-		</a>
-
-		<?php get_template_part( 'global-templates/navbar', $navbar_type . '-' . $bootstrap_version ); ?>
-
-	</header><!-- #wrapper-navbar -->
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+        <button class="subscribe-button" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<div class="center-text">
+	<h2>Sign Up for Our Ideas Newsletter POV</h2>
+</div>
