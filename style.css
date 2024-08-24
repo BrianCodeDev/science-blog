@@ -40,3 +40,121 @@ Author: BrianCodeDev
     font-weight: bold;
     color: black;
 }
+.gradient-overlay {
+    /* Set dimensions and positioning */
+  
+    height: 500px; /* Full viewport height, adjust as needed */
+    position: relative;
+    background-image: 
+        linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0)),
+        url('http://science-blog.local/wp-content/uploads/2024/08/desktop-wallpaper-nasa-r-widescreen-nasa-3440x1440-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 150px;
+    margin-right: 150px;
+    position: relative;
+}
+.newest-blog-post {
+    background-color: white;
+    width: 500px;
+    height: 300px;
+    box-shadow: 2px 2px 2px rgb(22, 22, 22);
+    position: absolute;
+    right: 30px;
+    bottom: -50px;
+}
+.site-main {
+    margin-top: 50px;
+}
+.post-author {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    bottom: 0;
+}
+.header-post {
+    justify-content: space-between;
+    display: flex;
+
+}
+.header-post-two {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.post-author img {
+    border-radius: 100px;
+    width: 50px;
+    border: 5px solid #F1F1F1;
+    object-fit: cover;
+}
+.newest-blog-post {
+    align-content: center;
+    text-align: center;
+}
+.title-post {
+    width: 50%;
+   margin: 0 auto;
+   padding: 0 !important; /* Ensures no padding is applied */
+   margin: 0 auto !important;  /* Ensures no margin is applied */
+   letter-spacing: -0.05em; /* Adjust letter spacing if needed */
+   line-height: 1; /* Reduces vertical space by adjusting line height */
+}
+
+
+.title-post a {
+    font-size: 26px;
+    color: black !important;
+    padding: 0 !important;
+}
+
+.paragraph-post {
+    font-size: 16px;
+    color: black !important;
+    display: none;
+}
+.header-post {
+    padding: 10px 10px;
+}
+.header-post-two a {
+    background-color: #54A76B;
+    color: white;
+    border-radius: 100px;
+    padding: 5px 25px;
+}
+.post-thumbnail {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 80px;
+}
+.top-left {
+    margin-left: 150px;
+    margin-top: 10px;
+}
+.top-left button {
+    padding: 5px 20px;
+    border: 1px solid black;
+    border-radius: 6px;
+    color: black;
+    background-color: white;
+}
+
+
+
+
+
+.slider-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.slider-btn:hover {
+    background-color: #0056b3;
+}

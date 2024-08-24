@@ -47,3 +47,15 @@ $navbar_type       = get_theme_mod( 'understrap_navbar_type', 'collapse' );
 <div class="center-text">
 	<h2>Sign Up for Our Ideas Newsletter POV</h2>
 </div>
+<div class="gradient-overlay">
+    <div class="newest-blog-post">
+        <?php echo do_shortcode('[latest_post posts_per_page="5"]'); ?>
+    </div>
+</div>
+<div class="top-left">
+    <button id="prev-post" class="slider-btn">PREV</button>
+    <button id="next-post" class="slider-btn">NEXT</button>
+</div>
+
+
+
