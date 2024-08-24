@@ -1,83 +1,45 @@
 <?php
 /**
- * The template for displaying search results pages
+ * The template for displaying search results pages.
  *
- * @package Understrap
+ * Learn more: http://codex.wordpress.org/Template_Hierarchy
+ *
+ * @package     Bloghash
+ * @author      Peregrine Themes
+ * @since       1.0.0
  */
-
-// Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
-
-get_header();
-
-$container = get_theme_mod( 'understrap_container_type' );
 
 ?>
 
-<div class="wrapper" id="search-wrapper">
+<?php get_header(); ?>
 
-	<div class="<?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
+<?php do_action( 'bloghash_before_container' ); ?>
 
-		<div class="row">
+<div class="bloghash-container">
 
-			<?php
-			// Do the left sidebar check and open div#primary.
-			get_template_part( 'global-templates/left-sidebar-check' );
-			?>
+	<?php do_action( 'bloghash_before_content_area', 'before_post_archive' ); ?>
 
-			<main class="site-main" id="main">
+	<div id="primary" class="content-area">
 
-				<?php if ( have_posts() ) : ?>
+		<?php do_action( 'bloghash_before_content' ); ?>
 
-					<header class="page-header">
+		<main id="content" class="site-content" role="main"<?php bloghash_schema_markup( 'main' ); ?>>
 
-							<h1 class="page-title">
-								<?php
-								printf(
-									/* translators: %s: query term */
-									esc_html__( 'Search Results for: %s', 'understrap' ),
-									'<span>' . get_search_query() . '</span>'
-								);
-								?>
-							</h1>
+			<?php do_action( 'bloghash_content_search' ); ?>
 
-					</header><!-- .page-header -->
+		</main><!-- #content .site-content -->
 
-					<?php /* Start the Loop */ ?>
-					<?php
-					while ( have_posts() ) :
-						the_post();
+		<?php do_action( 'bloghash_after_content' ); ?>
 
-						/*
-						 * Run the loop for the search to output the results.
-						 * If you want to overload this in a child theme then include a file
-						 * called content-search.php and that will be used instead.
-						 */
-						get_template_part( 'loop-templates/content', 'search' );
-					endwhile;
-					?>
+	</div><!-- #primary .content-area -->
 
-				<?php else : ?>
+	<?php do_action( 'bloghash_sidebar' ); ?>
 
-					<?php get_template_part( 'loop-templates/content', 'none' ); ?>
+	<?php do_action( 'bloghash_after_content_area' ); ?>
 
-				<?php endif; ?>
+</div><!-- END .bloghash-container -->
 
-			</main>
-
-			<?php
-			// Display the pagination component.
-			understrap_pagination();
-
-			// Do the right sidebar check and close div#primary.
-			get_template_part( 'global-templates/right-sidebar-check' );
-			?>
-
-		</div><!-- .row -->
-
-	</div><!-- #content -->
-
-</div><!-- #search-wrapper -->
+<?php do_action( 'bloghash_after_container' ); ?>
 
 <?php
 get_footer();

@@ -1,90 +1,39 @@
 <?php
 /**
- * The template for displaying 404 pages (not found)
+ * The template for displaying 404 pages (not found).
  *
- * @package Understrap
+ * @link https://codex.wordpress.org/Creating_an_Error_404_Page
+ *
+ * @package     Bloghash
+ * @author      Peregrine Themes
+ * @since       1.0.0
  */
 
-// Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
-
-get_header();
-
-$container = get_theme_mod( 'understrap_container_type' );
 ?>
 
-<div class="wrapper" id="error-404-wrapper">
+<?php get_header(); ?>
 
-	<div class="<?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
+<div class="bloghash-container">
 
-		<div class="row">
+	<?php do_action( 'bloghash_before_content_area', 'before_post_archive' ); ?>
 
-			<div class="col-md-12 content-area" id="primary">
+	<div id="primary" class="content-area">
 
-				<main class="site-main" id="main">
+		<?php do_action( 'bloghash_before_content' ); ?>
 
-					<section class="error-404 not-found">
+		<main id="content" class="site-content" role="main"<?php bloghash_schema_markup( 'main' ); ?>>
 
-						<header class="page-header">
+			<?php do_action( 'bloghash_content_404' ); ?>
 
-							<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'understrap' ); ?></h1>
+		</main><!-- #content .site-content -->
 
-						</header><!-- .page-header -->
+		<?php do_action( 'bloghash_after_content' ); ?>
 
-						<div class="page-content">
+	</div><!-- #primary .content-area -->
 
-							<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try a search?', 'understrap' ); ?></p>
+	<?php do_action( 'bloghash_after_content_area' ); ?>
 
-							<?php get_search_form(); ?>
-
-							<?php the_widget( 'WP_Widget_Recent_Posts' ); ?>
-
-							<?php if ( understrap_categorized_blog() ) : // Only show the widget if site has multiple categories. ?>
-
-								<div class="widget widget_categories">
-
-									<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'understrap' ); ?></h2>
-
-									<ul>
-										<?php
-										wp_list_categories(
-											array(
-												'orderby'  => 'count',
-												'order'    => 'DESC',
-												'show_count' => 1,
-												'title_li' => '',
-												'number'   => 10,
-											)
-										);
-										?>
-									</ul>
-
-								</div><!-- .widget -->
-
-							<?php endif; ?>
-
-							<?php
-
-							/* translators: %1$s: smiley */
-							$archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'understrap' ), convert_smilies( ':)' ) ) . '</p>';
-							the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$archive_content" );
-
-							the_widget( 'WP_Widget_Tag_Cloud' );
-							?>
-
-						</div><!-- .page-content -->
-
-					</section><!-- .error-404 -->
-
-				</main>
-
-			</div><!-- #primary -->
-
-		</div><!-- .row -->
-
-	</div><!-- #content -->
-
-</div><!-- #error-404-wrapper -->
+</div><!-- END .bloghash-container -->
 
 <?php
 get_footer();

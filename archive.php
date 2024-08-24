@@ -1,74 +1,45 @@
 <?php
 /**
- * The template for displaying archive pages
+ * The template for displaying archive pages.
  *
- * Learn more: https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * Learn more: http://codex.wordpress.org/Template_Hierarchy
  *
- * @package Understrap
+ * @package BlogHash
+ * @author Peregrine Themes
+ * @since   1.0.0
  */
 
-// Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
-
-get_header();
-
-$container = get_theme_mod( 'understrap_container_type' );
 ?>
 
-<div class="wrapper" id="archive-wrapper">
+<?php get_header(); ?>
 
-	<div class="<?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
+<?php do_action( 'bloghash_before_container' ); ?>
 
-		<div class="row">
+<div class="bloghash-container">
 
-			<?php
-			// Do the left sidebar check and open div#primary.
-			get_template_part( 'global-templates/left-sidebar-check' );
-			?>
+	<?php do_action( 'bloghash_before_content_area', 'before_post_archive' ); ?>
 
-			<main class="site-main" id="main">
+	<div id="primary" class="content-area">
 
-				<?php
-				if ( have_posts() ) {
-					?>
-					<header class="page-header">
-						<?php
-						the_archive_title( '<h1 class="page-title">', '</h1>' );
-						the_archive_description( '<div class="taxonomy-description">', '</div>' );
-						?>
-					</header><!-- .page-header -->
-					<?php
-					// Start the loop.
-					while ( have_posts() ) {
-						the_post();
+		<?php do_action( 'bloghash_before_content' ); ?>
 
-						/*
-						 * Include the Post-Format-specific template for the content.
-						 * If you want to override this in a child theme, then include a file
-						 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-						 */
-						get_template_part( 'loop-templates/content', get_post_format() );
-					}
-				} else {
-					get_template_part( 'loop-templates/content', 'none' );
-				}
-				?>
+		<main id="content" class="site-content" role="main"<?php bloghash_schema_markup( 'main' ); ?>>
 
-			</main>
+			<?php do_action( 'bloghash_content_archive' ); ?>
 
-			<?php
-			// Display the pagination component.
-			understrap_pagination();
+		</main><!-- #content .site-content -->
 
-			// Do the right sidebar check and close div#primary.
-			get_template_part( 'global-templates/right-sidebar-check' );
-			?>
+		<?php do_action( 'bloghash_after_content' ); ?>
 
-		</div><!-- .row -->
+	</div><!-- #primary .content-area -->
 
-	</div><!-- #content -->
+	<?php do_action( 'bloghash_sidebar' ); ?>
 
-</div><!-- #archive-wrapper -->
+	<?php do_action( 'bloghash_after_content_area' ); ?>
+
+</div><!-- END .bloghash-container -->
+
+<?php do_action( 'bloghash_after_container' ); ?>
 
 <?php
 get_footer();

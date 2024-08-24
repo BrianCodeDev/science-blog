@@ -1,61 +1,65 @@
 <?php
 /**
- * The template for displaying all pages
+ * The main template file.
  *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site will use a
- * different template.
+ * This is the most generic template file in a WordPress theme and one of the
+ * two required files for a theme (the other being style.css).
+ * It is used to display a page when nothing more specific matches a query.
+ * For example, it puts together the home page when no home.php file exists.
  *
- * @package Understrap
+ * Learn more: http://codex.wordpress.org/Template_Hierarchy
+ *
+ * @package     Bloghash
+ * @author      Peregrine Themes
+ * @since       1.0.0
  */
-
-// Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
-
-get_header();
-
-$container = get_theme_mod( 'understrap_container_type' );
 
 ?>
 
-<div class="wrapper" id="page-wrapper">
+<?php
+get_header();
 
-	<div class="<?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
-
-		<div class="row">
-
-			<?php
-			// Do the left sidebar check and open div#primary.
-			get_template_part( 'global-templates/left-sidebar-check' );
-			?>
-
-			<main class="site-main" id="main">
-
-				<?php
-				while ( have_posts() ) {
-					the_post();
-					get_template_part( 'loop-templates/content', 'page' );
-
-					// If comments are open or we have at least one comment, load up the comment template.
-					if ( comments_open() || get_comments_number() ) {
-						comments_template();
-					}
-				}
-				?>
-
-			</main>
-
-			<?php
-			// Do the right sidebar check and close div#primary.
-			get_template_part( 'global-templates/right-sidebar-check' );
-			?>
-
-		</div><!-- .row -->
-
-	</div><!-- #content -->
-
-</div><!-- #page-wrapper -->
+do_action( 'bloghash_before_singular_container' );
+?>
 
 <?php
+if ( '' !== get_the_content() ) : 
+do_action( 'bloghash_before_container' );
+?>
+<div class="bloghash-container">
+
+	<?php do_action( 'bloghash_before_content_area', 'before_post_archive' ); ?>
+
+	<div id="primary" class="content-area">
+
+		<?php do_action( 'bloghash_before_content' ); ?>
+
+		<main id="content" class="site-content" role="main"<?php bloghash_schema_markup( 'main' ); ?>>
+
+			<?php
+				do_action( 'bloghash_before_singular' );
+
+				do_action( 'bloghash_content_singular' );
+
+				do_action( 'bloghash_after_singular' );
+			?>
+
+		</main><!-- #content .site-content -->
+
+		<?php do_action( 'bloghash_after_content' ); ?>
+
+	</div><!-- #primary .content-area -->
+
+	<?php do_action( 'bloghash_sidebar' ); ?>
+
+	<?php do_action( 'bloghash_after_content_area' ); ?>
+
+</div><!-- END .bloghash-container -->
+<?php
+do_action( 'bloghash_after_container' );
+endif;
+?>
+
+<?php
+do_action( 'bloghash_after_singular_container' );
 get_footer();

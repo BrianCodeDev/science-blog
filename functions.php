@@ -1,110 +1,212 @@
-<?php
+<?php //phpcs:ignore
 /**
- * UnderStrap functions and definitions
+ * Theme functions and definitions.
  *
- * @package Understrap
+ * @package BlogHash
+ * @author Peregrine Themes
+ * @since   1.0.0
  */
 
-// Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+/**
+ * Main Bloghash class.
+ *
+ * @since 1.0.0
+ */
+final class Bloghash {
 
-// UnderStrap's includes directory.
-$understrap_inc_dir = 'inc';
+	/**
+	 * Theme options
+	 *
+	 * @since 1.0.0
+	 * @var object
+	 */
+	public $options;
 
-// Array of files to include.
-$understrap_includes = array(
-	'/theme-settings.php',                  // Initialize theme default settings.
-	'/setup.php',                           // Theme setup and custom theme supports.
-	'/widgets.php',                         // Register widget area.
-	'/enqueue.php',                         // Enqueue scripts and styles.
-	'/template-tags.php',                   // Custom template tags for this theme.
-	'/pagination.php',                      // Custom pagination for this theme.
-	'/hooks.php',                           // Custom hooks.
-	'/extras.php',                          // Custom functions that act independently of the theme templates.
-	'/customizer.php',                      // Customizer additions.
-	'/custom-comments.php',                 // Custom Comments file.
-	'/class-wp-bootstrap-navwalker.php',    // Load custom WordPress nav walker. Trying to get deeper navigation? Check out: https://github.com/understrap/understrap/issues/567.
-	'/editor.php',                          // Load Editor functions.
-	'/block-editor.php',                    // Load Block Editor functions.
-	'/deprecated.php',                      // Load deprecated functions.
-);
+	/**
+	 * Theme fonts
+	 *
+	 * @since 1.0.0
+	 * @var object
+	 */
+	public $fonts;
 
-// Load WooCommerce functions if WooCommerce is activated.
-if ( class_exists( 'WooCommerce' ) ) {
-	$understrap_includes[] = '/woocommerce.php';
+	/**
+	 * Theme icons
+	 *
+	 * @since 1.0.0
+	 * @var object
+	 */
+	public $icons;
+
+	/**
+	 * Theme customizer
+	 *
+	 * @since 1.0.0
+	 * @var object
+	 */
+	public $customizer;
+
+	/**
+	 * Theme admin
+	 *
+	 * @since 1.0.0
+	 * @var object
+	 */
+	public $admin;
+
+	/**
+	 * Singleton instance of the class.
+	 *
+	 * @since 1.0.0
+	 * @var object
+	 */
+	private static $instance;
+	/**
+	 * Theme version.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $version = '1.0.14';
+	/**
+	 * Main Bloghash Instance.
+	 *
+	 * Insures that only one instance of Bloghash exists in memory at any one
+	 * time. Also prevents needing to define globals all over the place.
+	 *
+	 * @since 1.0.0
+	 * @return Bloghash
+	 */
+	public static function instance() {
+		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Bloghash ) ) {
+			self::$instance = new Bloghash();
+			self::$instance->constants();
+			self::$instance->includes();
+			self::$instance->objects();
+			// Hook now that all of the Bloghash stuff is loaded.
+			do_action( 'bloghash_loaded' );
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Setup constants.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	private function constants() {
+		if ( ! defined( 'BLOGHASH_THEME_VERSION' ) ) {
+			define( 'BLOGHASH_THEME_VERSION', $this->version );
+		}
+		if ( ! defined( 'BLOGHASH_THEME_URI' ) ) {
+			define( 'BLOGHASH_THEME_URI', get_parent_theme_file_uri() );
+		}
+		if ( ! defined( 'BLOGHASH_THEME_PATH' ) ) {
+			define( 'BLOGHASH_THEME_PATH', get_parent_theme_file_path() );
+		}
+	}
+	/**
+	 * Include files.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function includes() {
+		require_once BLOGHASH_THEME_PATH . '/inc/common.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/helpers.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/widgets.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/template-tags.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/template-parts.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/icon-functions.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/breadcrumbs.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/class-bloghash-dynamic-styles.php';
+		// Core.
+		require_once BLOGHASH_THEME_PATH . '/inc/core/class-bloghash-options.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/core/class-bloghash-enqueue-scripts.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/core/class-bloghash-fonts.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/core/class-bloghash-theme-setup.php';
+		// Compatibility.
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/woocommerce/class-bloghash-woocommerce.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/socialsnap/class-bloghash-socialsnap.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-wpforms.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-jetpack.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-beaver-themer.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-elementor.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-elementor-pro.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-hfe.php';
+
+		if ( is_admin() ) {
+			require_once BLOGHASH_THEME_PATH . '/inc/utilities/class-bloghash-plugin-utilities.php';
+			require_once BLOGHASH_THEME_PATH . '/inc/admin/class-bloghash-admin.php';
+
+		}
+		new Bloghash_Enqueue_Scripts();
+		// Customizer.
+		require_once BLOGHASH_THEME_PATH . '/inc/customizer/class-bloghash-customizer.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/customizer/customizer-callbacks.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/customizer/class-bloghash-section-ordering.php';
+	}
+	/**
+	 * Setup objects to be used throughout the theme.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function objects() {
+
+		bloghash()->options    = new Bloghash_Options();
+		bloghash()->fonts      = new Bloghash_Fonts();
+		bloghash()->icons      = new Bloghash_Icons();
+		bloghash()->customizer = new Bloghash_Customizer();
+		if ( is_admin() ) {
+			bloghash()->admin = new Bloghash_Admin();
+		}
+	}
 }
 
-// Load Jetpack compatibility file if Jetpack is activiated.
-if ( class_exists( 'Jetpack' ) ) {
-	$understrap_includes[] = '/jetpack.php';
+/**
+ * The function which returns the one Bloghash instance.
+ *
+ * Use this function like you would a global variable, except without needing
+ * to declare the global.
+ *
+ * Example: <?php $bloghash = bloghash(); ?>
+ *
+ * @since 1.0.0
+ * @return object
+ */
+function bloghash() {
+	return Bloghash::instance();
 }
-
-// Include files.
-foreach ( $understrap_includes as $file ) {
-	require_once get_theme_file_path( $understrap_inc_dir . $file );
-}
-function my_theme_enqueue_styles() {
+function custom_theme_enqueue_styles() {
     // Enqueue Bootstrap CSS
-    wp_enqueue_style('bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', array(), '5.3.3', 'all');
-    
-    // Enqueue theme's main stylesheet
-    wp_enqueue_style('theme-style', get_stylesheet_uri(), array('bootstrap-css'), '1.0');
-    
-    // Enqueue Bootstrap JS
-    wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array('jquery'), '5.3.3', true);
-}
-add_action('wp_enqueue_scripts', 'my_theme_enqueue_styles');
-function display_latest_post() {
-    // Query for the latest post
-    $args = array(
-        'posts_per_page' => 1,
-        'post_status'    => 'publish',
-        'orderby'        => 'date',
-        'order'          => 'DESC',
+    wp_enqueue_style(
+        'bootstrap-css', 
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', 
+        array(), 
+        null
     );
-    $latest_post_query = new WP_Query($args);
 
-    if ($latest_post_query->have_posts()) {
-        $latest_post_query->the_post();
-        $post_title = get_the_title();
-        $post_content = get_the_content(); // Get full content
-        $post_excerpt = wp_trim_words($post_content, 40, '...'); // Trim content to a specific length
-        $post_permalink = get_permalink();
-        $post_author = get_the_author(); // Get the author's name
-        $post_author_id = get_the_author_meta('ID'); // Get the author's ID
-        $post_author_avatar = get_avatar($post_author_id, 64); // Get the author's avatar with size 64x64
-        $post_date = get_the_date('F j, Y'); // Format date as "January 21, 2021"
-        $read_time = ceil(str_word_count(strip_tags($post_content)) / 200) . ' min read'; // Estimate read time
-        $post_thumbnail = get_the_post_thumbnail(null, 'thumbnail', array('class' => 'post-thumbnail')); // Get the post thumbnail
+    // Enqueue custom CSS
+    wp_enqueue_style(
+        'custom-style', 
+        get_stylesheet_uri(), 
+        array('bootstrap-css'), 
+        filemtime(get_template_directory() . '/style.css')
+    );
 
-        // Generate the output
-        $output = '<div class="latest-post-wrapper">';
-        $output .= $post_thumbnail; // Display the post thumbnail on the right
-        $output .= '<h2 class="title-post"><a href="' . esc_url($post_permalink) . '">' . esc_html($post_title) . '</a></h2>';
-        $output .= '<p class="paragraph-post">' . esc_html($post_excerpt) . '</p>'; // Display trimmed content
-        $output .= '<div class="header-post">';
-        $output .= '<div class="header-post-one">';
-        $output .= '<div class="post-author">';
-        $output .= $post_author_avatar . ' <p><strong>' . esc_html($post_author) . '</strong></p>';
-        $output .= '<p class="post-date">' . esc_html($post_date) . ' • ' . esc_html($read_time) . '</p>'; // Display date and read time below the author's name
-        $output .= '</div>';
-        $output .= '</div>';
-        $output .= '<div class="header-post-two">';
-        $output .= '<a class="btn btn-secondary understrap-read-more-link" href="' . esc_url($post_permalink) . '">Read More...</a>'; // Read More button
-        $output .= '</div>';
-        $output .= '</div>';
-        $output .= '</div>';
-        wp_reset_postdata();
-        return $output;
-    } else {
-        return '<p>No posts found.</p>';
-    }
+    // Enqueue Bootstrap JS
+    wp_enqueue_script(
+        'bootstrap-js', 
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', 
+        array('jquery'), 
+        null, 
+        true
+    );
 }
-add_shortcode('latest_post', 'display_latest_post');
 
+add_action('wp_enqueue_scripts', 'custom_theme_enqueue_styles');
 
-
-
-
-
+bloghash();
 
