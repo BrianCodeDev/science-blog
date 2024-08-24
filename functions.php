@@ -43,3 +43,14 @@ if ( class_exists( 'Jetpack' ) ) {
 foreach ( $understrap_includes as $file ) {
 	require_once get_theme_file_path( $understrap_inc_dir . $file );
 }
+function my_theme_enqueue_styles() {
+    // Enqueue Bootstrap CSS
+    wp_enqueue_style('bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', array(), '5.3.3', 'all');
+    
+    // Enqueue theme's main stylesheet
+    wp_enqueue_style('theme-style', get_stylesheet_uri(), array('bootstrap-css'), '1.0');
+    
+    // Enqueue Bootstrap JS
+    wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array('jquery'), '5.3.3', true);
+}
+add_action('wp_enqueue_scripts', 'my_theme_enqueue_styles');
